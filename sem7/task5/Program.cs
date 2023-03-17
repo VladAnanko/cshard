@@ -17,7 +17,28 @@ for (int i = 0; i < matrix.GetLength(0); i++)
 {
     for (int j = 0; j < matrix.GetLength(1); j++)
     {
-        matrix[i,j] = 1;
+        if (j == matrix.GetLength(0)-1 + i || j == matrix.GetLength(0)-1 - i)
+        {
+            matrix[i,j] = 1;
+        }
+        else if (j > matrix.GetLength(0)-1 + i || j < matrix.GetLength(0)-1 - i)
+        {
+            matrix[i,j] = 0;
+        }
+        else
+        {
+            if (j < matrix.GetLength(0)-1 + i || j > matrix.GetLength(0)-1 - i)
+            {
+                if (matrix[i-1,j] == 1)
+                {
+                    matrix[i,j] = 0;
+                }
+                else if (matrix[i-1,j] != 1)
+                {
+                    matrix [i,j] = matrix[i-1,j-1] + matrix[i-1,j+1];
+                }
+            }
+        }
     }
 }
 return matrix;
@@ -25,63 +46,22 @@ return matrix;
 
 void PrintMatrix (int [,] matrix)
 {
+
+// matrix[matrix.GetLength(0)-1,matrix.GetLength(0)*2-1]
 Console.WriteLine("полученый треугольник:");
 for (int i = 0; i < matrix.GetLength(0); i++)
 {
-    int j = 0;
-    while (j < matrix.GetLength(1))
+    for (int j = 0; j < matrix.GetLength(1); j++)
     {
-        if (j == matrix.GetLength(0)-1 + i || j == matrix.GetLength(0)-1 - i)
+        if (matrix[i,j] == 0)
         {
-            Console.Write($"{matrix[i,j]} ");
-            
-            j++;
-        }
-        else if (j > matrix.GetLength(0)-1 + i || j < matrix.GetLength(0)-1 - i)
-        {
-            matrix[i,j] = 0;
-            j++;
+            Console.Write("  ");
         }
         else
         {
-            if (j < matrix.GetLength(0)-1 + i || j > matrix.GetLength(0)-1 - i) // matrix[i-1,j] == 1 || matrix[i,j - 1] == 1 || matrix[i,j + 1] == 1)
-            {
-                if (matrix[i-1,j] == 1)
-                {
-                    matrix[i,j] = 0;
-                    Console.Write($"  ");
-                    j++;
-                }
-                else if (matrix[i-1,j] != 1)
-                {
-                    matrix [i,j] = matrix[i-1,j-1] + matrix[i-1,j+1];
-                    if (matrix[i,j] != 0)
-                    {
-                        Console.Write($"{matrix[i,j]} ");
-                    }
-                    else
-                    {
-                        Console.Write($"  ");
-                    }
-                    j++;
-                }
-            }
-           
-            
+            Console.Write($"{matrix[i,j]} ");
         }
     }
-
-    // строка +1
-    // строка +2
-    // строка -2. строка. строка +2
-    // for (int j = 0; j < matrix.GetLength(1); j++)
-    // {
-    //     if (j != matrix.GetLength(0)-1)
-    //     {
-    //         matrix [ i,j] = "+";
-    //     }
-    //     Console.Write(matrix[i,j]+" ");
-    // }
     Console.WriteLine();
 }
 }
