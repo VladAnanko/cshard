@@ -1,16 +1,10 @@
-﻿// Задача 49: Задайте двумерный массив. Найдите элементы, у которых оба индекса нечётные, и замените эти элементы на их квадраты.
-// ​
-// Например, изначально массив
-// выглядел вот так:
+﻿// Напишите программу, которая на вход принимает позиции элемента в двумерном массиве, и 
+// возвращает значение этого элемента или же указание, что такого элемента нет.
+// Например, задан массив:
 // 1 4 7 2
 // 5 9 2 3
 // 8 4 2 4
-// ​
-// Новый массив будет выглядеть
-// вот так:
-// 1 4 7 2
-// 5 81 2 9
-// 8 4 2 4
+// 1 7 -> такого числа в массиве нет
 void main()
 {
 int rows = cons ("введите число строк: ");
@@ -20,29 +14,33 @@ int RightBordr =cons ("введите правую границу: ");
 
 int [,] matrix = randomMatrix (rows, colomns, LeftBorder, RightBordr);
 PrintMatrix(matrix);
-
-int [,] newMatrix = col(matrix);
-
-PrintMatrix(newMatrix);
+Console.WriteLine($"{element (matrix)} искомый элемент массива");
 
 }
 
-int [,] col (int [,] matrix)
+bool IsOk (int [,] matrix, int row, int colomn)
 {
-for (int i = 0; i < matrix.GetLength(0); i++)
-{
-    if ( i % 2 == 1)
-    {
-    for (int j = 0; j < matrix.GetLength(1); j++)
-    {
-        if (j % 2 == 1)
-        {
-            matrix[i,j] *= matrix [i,j];
-        }
-    }
-    }
+    if (row < matrix.GetLength(0) && colomn < matrix.GetLength(1))
+        return true;
+    else
+        return false;
 }
-return matrix;
+
+int element (int [,] matrix)
+
+{
+    int row = cons ("Введите искомую строку: ");
+    int colomn = cons ("Введите искомый столбец: ");
+    if (IsOk(matrix, row, colomn) == true)
+    {
+        return matrix[row,colomn];
+    }
+    else 
+    {
+        Console.WriteLine("Такого элемента не существует, попробуйте еще раз");
+        return element(matrix);
+    }
+
 }
 
 int [,] randomMatrix (int row, int colomns, int LeftBorder, int RightBordr)
