@@ -11,4 +11,8 @@ double k1 = cons ("Введите к1: ");
 double b1 = cons ("Введите b1: ");
 double k2 = cons ("Введите к2: ");
 double b2 = cons ("Введите b2: ");
+if (k2 == k1)
+{
+    Console.WriteLine("пошел нахуй");
+}
 Console.WriteLine($"точка пересечения : y = {k2 * (b2 - b1) / (k1 - k2) + b2} x = {(b2 - b1) / (k1 - k2)}");
